@@ -22,10 +22,14 @@ Digitar "S" para alterar a politica de execução e teclar Enter.
 ### Iniciar o ambiente virtual no venv:
 .\venv\Scripts\Activate.ps1
 
-## Requisitos para fazer chamadas a API do Gmail:
+### Ativar chamadas a chamadas a API do Gmail:
  1. Possuir uma conta Google com Gmail ativado;
  2. Criar um projeto do Google Cloud Platform com a API ativada https://developers.google.com/workspace/guides/create-project;
  3. Autorizar credenciais para aplicação Desktop https://developers.google.com/workspace/guides/create-credentials.
 
 ### Executar o projeto
+Para retornar conteúdos da mensagem no campo Snippet:
 ```py .\read_email_messages.py```
+
+Para retornar o token de validação no e-mail, que é encontrado no snippet da mensagem e isolado utilizando expressão regular:
+```py .\get_email_security_code.py```

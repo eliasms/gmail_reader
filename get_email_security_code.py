@@ -7,6 +7,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
+import re
+
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
@@ -45,17 +47,24 @@ def main():
         print ('No messages found.')
     # Filter message and get content
     else:
+        #List messages with query parameters:
         query_msg = service.users().messages().list(
             userId='me',
             q="Código de segurança da conta da Microsoft",
             maxResults=1).execute()
         messages_content = query_msg.get("messages")[0]
+        #Get message listed
         id_msg = messages_content['id']
         msg = service.users().messages().get(userId='me', id=id_msg).execute()
+        #Get message snippet
         snippet = msg['snippet']
 
-        print("Snippet:")
-        print(snippet)
+        #get token in message using regular expression
+        find_token_param = re.compile('[0-9]{7}')
+        token = find_token_param.findall(snippet)[0]
+
+        print("Security token:")
+        print(token)
 
 if __name__ == '__main__':
     main()
